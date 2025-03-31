@@ -84,6 +84,31 @@ workstat_map = {
 }
 data_cleaned['WORK_STATUS'] = data_cleaned['WORKSTAT'].map(workstat_map)
 
+# --- Rename Columns for Clarity ---
+data.rename(columns={
+    'AGYSUB': 'AGENCY_CODE',
+    'LOC': 'LOCATION_CODE',
+    'AGELVL': 'AGE_LEVEL_CODE',
+    'EDLVL': 'EDUCATION_LEVEL_CODE',
+    'GSEGRD': 'GS_GRADE_CODE',
+    'LOSLVL': 'SERVICE_YEARS_CODE',
+    'OCC': 'OCCUPATION_CODE',
+    'PATCO': 'OCC_CATEGORY_CODE',
+    'PP': 'PAY_PLAN_CODE',
+    'PPGRD': 'PAY_PLAN_GRADE',
+    'SALLVL': 'SALARY_LEVEL_CODE',
+    'STEMOCC': 'STEM_OCCUPATION_CODE',
+    'SUPERVIS': 'SUPERVISORY_STATUS_CODE',
+    'TOA': 'APPOINTMENT_TYPE_CODE',
+    'WORKSCH': 'WORK_SCHEDULE_CODE',
+    'WORKSTAT': 'WORK_STATUS_CODE',
+    'DATECODE': 'DATA_DATE_CODE',
+    'EMPLOYMENT': 'EMPLOYMENT_FLAG',
+    'SALARY': 'ACTUAL_SALARY',
+    'LOS': 'YEARS_OF_SERVICE'
+}, inplace=True)
+
+
 # --- Step 3: Export to Power BI-Friendly CSV ---
 
 # Save cleaned and enriched dataset
