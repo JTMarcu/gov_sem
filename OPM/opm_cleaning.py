@@ -21,6 +21,21 @@ data = pd.read_csv(file_path)
 
 # --- Step 1: Clean Data ---
 
+# --- Load Agency Translation File (DTagy.txt) ---
+agency_map = pd.read_csv('DTagy.txt')  # Ensure this file is in the same folder
+
+# Merge in full agency names
+data = data.merge(agency_map[['AGYSUB', 'AGYSUBT']], on='AGYSUB', how='left')
+data.rename(columns={'AGYSUBT': 'AGENCY_NAME'}, inplace=True)
+
+# Remove prefix before dash and any surrounding quotes
+data['AGENCY_NAME'] = (
+    data['AGENCY_NAME']
+    .str.replace(r'^.*?-', '', regex=True)  # Remove everything before and including the dash
+    .str.replace('"', '', regex=False)      # Remove quotes
+    .str.strip()                            # Trim any leftover spaces
+)
+
 # Remove rows with missing SALARY or LOS
 data_cleaned = data.dropna(subset=['SALARY', 'LOS'])
 
