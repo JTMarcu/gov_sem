@@ -84,8 +84,14 @@ workstat_map = {
 }
 data_cleaned['WORK_STATUS'] = data_cleaned['WORKSTAT'].map(workstat_map)
 
+# Fill missing values in AGE_GROUP with 'Unknown'
+data_cleaned['AGE_GROUP'].fillna('Unknown', inplace=True)
+
+# Fill missing values in EDUCATION with 'Not Specified'
+data_cleaned['EDUCATION'].fillna('Not Specified', inplace=True)
+
 # --- Rename Columns for Clarity ---
-data.rename(columns={
+data_cleaned.rename(columns={
     'AGYSUB': 'AGENCY_CODE',
     'LOC': 'LOCATION_CODE',
     'AGELVL': 'AGE_LEVEL_CODE',
@@ -108,6 +114,11 @@ data.rename(columns={
     'LOS': 'YEARS_OF_SERVICE'
 }, inplace=True)
 
+# Normalize GS_GRADE values by converting them to integers
+data_cleaned['GS_GRADE'] = data_cleaned['GS_GRADE'].replace('nan', None).astype(float).astype('Int64')
+
+# Display unique GS_GRADE values after normalization
+unique_gs_grades = data_cleaned['GS_GRADE'].unique()
 
 # --- Step 3: Export to Power BI-Friendly CSV ---
 
